@@ -22,8 +22,11 @@ from typing import List
 import art
 from art.rewards import ruler_score_group
 from art.utils import iterate_dataset
+from art.local import LocalBackend
 from load_data import load_scenarios
+from dotenv import load_dotenv
 
+load_dotenv()
 scenarios = load_scenarios("data")
 
 from rollout import MDScenario, TaskType, rollout
@@ -39,14 +42,20 @@ cfg = {
     "max_steps": 12,
 }
 
-MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.2"
-model = art.Model.from_pretrained(MODEL_ID, trainable=True)
+MODEL_ID = "Qwen/Qwen2.5-14B-Instruct"
+model = art.TrainableModel(base_model=MODEL_ID, name="MarkdownAgent", project="markdown-agent-art",trainable=True)
 
 
 # --------------------------------------------------------------------------- #
 #                                  Main loop                                  #
 # --------------------------------------------------------------------------- #
 async def main() -> None:
+
+    backend = LocalBackend()
+
+    # Register the model with the local backend (sets up logging, inference, and training)
+    await model.register(backend)
+
     iterator = iterate_dataset(
         scenarios,
         groups_per_step=cfg["groups_per_step"],
