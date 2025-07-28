@@ -7,5 +7,6 @@ dependencies = [
     "langchain-core>=0.3.72",
     "openpipe-art>=0.4.4",
     "weave>=0.51.56",
-    "openpipe-ard[backend]>=0.4.4",
+    "openpipe-art[backend]>=0.4.4",
+    "transformers==4.53.2",
 ]
