@@ -8,5 +8,5 @@ dependencies = [
     "openpipe-art>=0.4.4",
     "weave>=0.51.56",
     "openpipe-art[backend]>=0.4.4",
-    "transformers==4.53.2",
+    "transformers==4.53.2"
 ]

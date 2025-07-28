@@ -73,6 +73,7 @@ async def main() -> None:
 
     # Register the model with the local backend (sets up logging, inference, and training)
     await model.register(backend)
+    print("Model registered with backend.")
 
     iterator = iterate_dataset(
         scenarios,
