@@ -43,7 +43,25 @@ cfg = {
 }
 
 MODEL_ID = "Qwen/Qwen2.5-14B-Instruct"
-model = art.TrainableModel(base_model=MODEL_ID, name="MarkdownAgent", project="markdown-agent-art",trainable=True)
+model = art.TrainableModel(
+    base_model=MODEL_ID,
+    name="MarkdownAgent",
+    project="markdown-agent-art",
+    trainable=True,
+    #_internal_config={"init_args": {"gpu_memory_utilization": 0.775}},
+)
+
+model._internal_config = art.dev.InternalModelConfig(
+    init_args=art.dev.InitArgs(
+        max_seq_length=8192,
+        load_in_8bit=True,
+
+    ),
+    engine_args=art.dev.EngineArgs(
+        enforce_eager=True,
+        gpu_memory_utilization=0.8,
+    ),
+)
 
 
 # --------------------------------------------------------------------------- #
